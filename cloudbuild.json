@@ -20,7 +20,7 @@
 			"name": "node:18",
 			"entrypoint": "bash",
 			"dir": "cmd/client/bawell-client",
-			"args": ["-c", "|", "cd cmd/client/bawell-client", "npm ci", "npm run build"]
+			"args": ["-c", "npm ci && npm run build"]
 		},
 		{
 			"name": "ubuntu",
