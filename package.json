@@ -11,6 +11,7 @@
 		"dev": "nodemon index.js"
 	},
 	"dependencies": {
+		"archiver": "^7.0.1",
 		"chokidar": "^4.0.3",
 		"cors": "^2.8.5",
 		"express": "^5.1.0",
