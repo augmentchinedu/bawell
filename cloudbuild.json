@@ -32,6 +32,15 @@
 			]
 		},
 		{
+			"name": "ubuntu",
+			"dir": "cmd/client/bawell-client",
+			"entrypoint": "bash",
+			"args": [
+				"-c",
+				"mv dist ../ && cd .. && rm -rf bawell-client && find . -maxdepth 1 -name '*.json' -delete"
+			]
+		},
+		{
 			"name": "gcr.io/cloud-builders/npm",
 			"args": ["install"]
 		},
