@@ -17,9 +17,10 @@
 			"args": ["install"]
 		},
 		{
-			"name": "gcr.io/cloud-builders/npm",
+			"name": "node:18",
+			"entrypoint": "bash",
 			"dir": "cmd/client/bawell-client",
-			"args": ["run", "build"]
+			"args": ["-c", "|", "cd cmd/client/bawell-client", "npm ci", "npm run build"]
 		},
 		{
 			"name": "ubuntu",
