@@ -1,7 +1,7 @@
 {
 	"steps": [
 		{
-			"name": "gcr.io/cloud-builders/bash:latest",
+			"name": "ubuntu",
 			"dir": "cmd",
 			"entrypoint": "bash",
 			"args": ["-c", "mkdir -p client"]
@@ -22,7 +22,7 @@
 			"args": ["run", "build"]
 		},
 		{
-			"name": "gcr.io/cloud-builders/bash:latest",
+			"name": "ubuntu",
 			"dir": "cmd/client/bawell-client",
 			"entrypoint": "bash",
 			"args": [
