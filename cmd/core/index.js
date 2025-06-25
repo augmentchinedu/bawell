@@ -12,8 +12,28 @@ function init() {
 		? JSON.parse(fs.readFileSync("data.json", "utf-8"))
 		: {};
 
+	const url = `http://localhost:2001`;
+	const startCommand =
+		process.platform === "win32"
+			? "start"
+			: process.platform === "darwin"
+			? "open"
+			: "xdg-open";
+
+	exec(`${startCommand} ${url}`, (err) => {
+		if (err) {
+			console.error("Failed to open browser:", err);
+		} else {
+			console.log(`Browser launched at ${url}`);
+		}
+	});
+
+	// Save All Altered Files To Repository
+
 	if (data.username) start();
-	else signin();
+	else {
+		console.info("Sign In On Browser");
+	}
 }
 
 function signin() {
