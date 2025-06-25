@@ -1,55 +1,36 @@
-#!/usr/bin/env node
-const { exec } = require("child_process");
-
-const chokidar = require("chokidar");
+const { init } = require("./core");
 const path = require("path");
-const os = require("os");
+const cors = require("cors");
+const morgan = require("morgan");
+const express = require("express");
 
-function saveChangedFiles() {
-	// Save All
-}
+const app = express();
 
-function start() {
-	const url = "http://localhost:2001";
-	const startCommand =
-		process.platform === "win32"
-			? "start"
-			: process.platform === "darwin"
-			? "open"
-			: "xdg-open";
+const router = require("./routes");
 
-	exec(`${startCommand} ${url}`, (err) => {
-		if (err) {
-			console.error("Failed to open browser:", err);
-		} else {
-			console.log(`Browser launched at ${url}`);
-		}
+// Middlewares
+app.use(cors());
+app.use(morgan("tiny"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// app.use(router);
+
+// Middleware to serve static assets based on TLD
+app.use((req, res, next) => {
+	express.static(path.join(__dirname, "client", "dist"))(req, res, next);
+});
+
+app.all("/{*any}", (req, res) => {
+	res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
+
+const PORT = process.env.PORT || 2001;
+
+(async () => {
+	await init();
+
+	app.listen(PORT, () => {
+		console.log(`Server Started @ ${PORT}`);
 	});
-
-	// Save All Altered Files To Repository
-
-	saveChangedFiles();
-}
-
-function initialize() {
-	start();
-
-	const docsPath = path.join(os.homedir(), "Documents");
-
-	console.log(`📂 Watching: ${docsPath} (excluding node_modules)`);
-
-	// Ignore hidden files AND node_modules folders
-	chokidar
-		.watch(docsPath, {
-			ignored: /(^|[\/\\])(\.git|node_modules)/,
-			persistent: true,
-		})
-		.on("add", (path) => console.log(`📄 File added: ${path}`))
-		.on("change", (path) => console.log(`✏️ File changed: ${path}`))
-		.on("unlink", (path) => console.log(`🗑️ File removed: ${path}`))
-		.on("addDir", (path) => console.log(`📁 Directory added: ${path}`))
-		.on("unlinkDir", (path) => console.log(`❌ Directory removed: ${path}`))
-		.on("error", (error) => console.error(`❗Error: ${error}`));
-}
-
-initialize();
+})();
