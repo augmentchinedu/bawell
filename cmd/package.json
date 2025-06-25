@@ -12,5 +12,8 @@
 	},
 	"bin": {
 		"bawell": "./index.js"
+	},
+	"dependencies": {
+		"chokidar": "^4.0.3"
 	}
 }
