@@ -39,7 +39,7 @@ app.all("/{*any}", (req, res) => {
 	res.json({});
 });
 
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 2001;
 
 (async () => {
 	await init();

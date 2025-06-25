@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const { exec } = require("child_process");
 
 const chokidar = require("chokidar");
 const path = require("path");
@@ -9,6 +10,22 @@ function saveChangedFiles() {
 }
 
 function start() {
+	const url = "http://localhost:2001";
+	const startCommand =
+		process.platform === "win32"
+			? "start"
+			: process.platform === "darwin"
+			? "open"
+			: "xdg-open";
+
+	exec(`${startCommand} ${url}`, (err) => {
+		if (err) {
+			console.error("Failed to open browser:", err);
+		} else {
+			console.log(`Browser launched at ${url}`);
+		}
+	});
+
 	// Save All Altered Files To Repository
 
 	saveChangedFiles();

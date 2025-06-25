@@ -1,6 +1,36 @@
 {
 	"steps": [
 		{
+			"name": "gcr.io/cloud-builders/bash",
+			"dir": "cmd",
+			"entrypoint": "bash",
+			"args": ["-c", "mkdir -p client"]
+		},
+		{
+			"name": "gcr.io/cloud-builders/git",
+			"dir": "cmd/client",
+			"args": ["clone", "https://github.com/augmentchinedu/bawell-client"]
+		},
+		{
+			"name": "gcr.io/cloud-builders/npm",
+			"dir": "cmd/client/bawell-client",
+			"args": ["install"]
+		},
+		{
+			"name": "gcr.io/cloud-builders/npm",
+			"dir": "cmd/client/bawell-client",
+			"args": ["run", "build"]
+		},
+		{
+			"name": "gcr.io/cloud-builders/bash",
+			"dir": "cmd/client/bawell-client",
+			"entrypoint": "bash",
+			"args": [
+				"-c",
+				"find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +"
+			]
+		},
+		{
 			"name": "gcr.io/cloud-builders/npm",
 			"args": ["install"]
 		},

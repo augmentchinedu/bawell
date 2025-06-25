@@ -1,0 +1,16 @@
+{
+	"name": "bawell",
+	"version": "1.0.0",
+	"description": "A Developer Box",
+	"license": "ISC",
+	"author": "Augment Chinedu",
+	"type": "commonjs",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js"
+	},
+	"bin": {
+		"bawell": "./index.js"
+	}
+}
