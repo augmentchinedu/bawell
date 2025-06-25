@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { init } = require("./core");
 const path = require("path");
 const cors = require("cors");
