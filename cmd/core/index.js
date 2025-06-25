@@ -4,37 +4,30 @@ const { exec } = require("child_process");
 const chokidar = require("chokidar");
 const path = require("path");
 const os = require("os");
+const fs = require("fs");
 
-function saveChangedFiles() {
-	// Save All
+let data;
+
+function init() {
+	data = fs.existsSync("data.json")
+		? JSON.parse(fs.readFileSync("data.json", "utf-8"))
+		: {};
+
+	if (data.username) start();
+	else signin();
+}
+
+function signin() {
+	const data = {
+		username: "augmentchinedu",
+		workspace: "Documents",
+	};
+
+	fs.writeFileSync("data.json", JSON.stringify(data, null, 2));
 }
 
 function start() {
-	const url = "http://localhost:2001";
-	const startCommand =
-		process.platform === "win32"
-			? "start"
-			: process.platform === "darwin"
-			? "open"
-			: "xdg-open";
-
-	exec(`${startCommand} ${url}`, (err) => {
-		if (err) {
-			console.error("Failed to open browser:", err);
-		} else {
-			console.log(`Browser launched at ${url}`);
-		}
-	});
-
-	// Save All Altered Files To Repository
-
-	saveChangedFiles();
-}
-
-function initialize() {
-	start();
-
-	const docsPath = path.join(os.homedir(), "Documents");
+	const docsPath = path.join(os.homedir(), data.workspace);
 
 	console.log(`📂 Watching: ${docsPath} (excluding node_modules)`);
 
@@ -52,6 +45,4 @@ function initialize() {
 		.on("error", (error) => console.error(`❗Error: ${error}`));
 }
 
-initialize();
-
-module.exports = { init: initialize };
+module.exports = { init };
