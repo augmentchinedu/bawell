@@ -25,15 +25,14 @@ function init() {
 			console.error("Failed to open browser:", err);
 		} else {
 			console.log(`Browser launched at ${url}`);
+			if (data.username) start();
+			else {
+				console.info("Sign In On Browser");
+			}
 		}
 	});
 
 	// Save All Altered Files To Repository
-
-	if (data.username) start();
-	else {
-		console.info("Sign In On Browser");
-	}
 }
 
 function signin() {
