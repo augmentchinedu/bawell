@@ -1,3 +1,4 @@
+const axios = require("axios");
 const express = require("express");
 const router = express.Router();
 
@@ -26,6 +27,15 @@ router.get("/download", async (req, res) => {
 		console.error("Archive error:", err);
 		res.status(500).send({ error: "Could not create zip" });
 	});
+});
+
+router.get("/check-username", async (req, res) => {
+	try {
+		await axios.get(`https://github.com/${req.query.username}`);
+		res.status(200).send(true);
+	} catch (err) {
+		res.status(400).send(false);
+	}
 });
 
 module.exports = router;
