@@ -19,7 +19,7 @@
 		{
 			"name": "curlimages/curl",
 			"id": "Fetch Env Variables",
-			"entrypoint": "bash",
+			"entrypoint": "sh",
 			"args": [
 				"-c",
 				"curl -s 'https://gkrane.online/api/get-client-data?name=bawell-client' > env.json && jq -r 'to_entries[] | \"\\(.key)=\\(.value)\"' env.json > .env"
