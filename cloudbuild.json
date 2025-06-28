@@ -26,7 +26,7 @@
 			]
 		},
 		{
-			"name": "gcr.io/cloud-builders/bash",
+			"name": "gcr.io/cloud-builders/gcloud",
 			"id": "Inject Into Files",
 			"entrypoint": "bash",
 			"args": [
